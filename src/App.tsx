@@ -1,14 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ActivityIndicator, View } from 'react-native';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
-import OnboardingScreen from './screens/OnboardingScreen';
+const LoginScreen = lazy(() => import('./screens/LoginScreen'));
+const HomeScreen = lazy(() => import('./screens/HomeScreen'));
+const OnboardingScreen = lazy(() => import('./screens/OnboardingScreen'));
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { LoadingFallback } from './components/LoadingFallback';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const RootNavigator = () => {
   }
 
   return (
+          <Suspense fallback={<LoadingFallback />}>
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -60,6 +62,7 @@ const RootNavigator = () => {
         />
       )}
     </Stack.Navigator>
+                  </Suspense>
   );
 };
 
