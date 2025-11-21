@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 const Stack = createStackNavigator();
 
@@ -65,11 +66,13 @@ const RootNavigator = () => {
 // Main App component wrapped with AuthProvider
 const App = () => {
   return (
+        <ErrorBoundary>
     <AuthProvider>
       <NavigationContainer>
         <RootNavigator />
       </NavigationContainer>
     </AuthProvider>
+              </ErrorBoundary>
   );
 };
 
